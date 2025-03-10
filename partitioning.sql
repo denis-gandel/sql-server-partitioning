@@ -2,11 +2,6 @@ CREATE DATABASE PartitioningDB;
 
 USE PartitioningDB;
 
-/*
-PARTITIONS: Define the LOGIC on how to divide your data into partitions!
-Based on Partition Key like (Region, Dates, and others)
-*/
-
 -- CREATE PARTITIONS
 CREATE PARTITION FUNCTION PartitionByBirthDate (DATE)
 AS RANGE LEFT FOR VALUES ('2023-12-31', '2024-12-31', '2025-12-31');
@@ -17,9 +12,6 @@ SELECT *
 FROM sys.partition_functions;
 
 -- CREATE FILEGROUPS
-/*
- FILEGROUP: Is the logical CONTAINER of one or more data files to help organize partitions.
- */
 
 ALTER DATABASE PartitioningDB ADD FILEGROUP FG_2023;
 ALTER DATABASE PartitioningDB ADD FILEGROUP FG_2024;
@@ -27,9 +19,6 @@ ALTER DATABASE PartitioningDB ADD FILEGROUP FG_2025;
 ALTER DATABASE PartitioningDB ADD FILEGROUP FG_2026;
 
 -- SELECT FILEGROUPS
-/*
-By default exist PRIMARY filegroup that is where all objects of database is stored
-*/
 
 SELECT *
 FROM sys.filegroups
@@ -110,8 +99,6 @@ FROM sys.partitions p
 JOIN sys.destination_data_spaces dds ON p.partition_number = dds.destination_id
 JOIN sys.filegroups f ON dds.data_space_id = f.data_space_id
 WHERE OBJECT_NAME(p.object_id) = 'UsersPartitioning_ByBirthDate';
-
--- .ndf Non-Primary Data File
 
 SELECT * 
 FROM dbo.UsersPartitioning_ByBirthDate
