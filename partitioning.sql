@@ -89,6 +89,8 @@ CREATE TABLE dbo.UsersPartitioning_ByBirthDate
     Country VARCHAR(100) NOT NULL
 ) ON SchemePartitionByBirthDate (BirthDate);
 
+-- TEST SQL QUERIES
+
 SELECT * FROM dbo.UsersPartitioning_ByBirthDate;
 
 SELECT 

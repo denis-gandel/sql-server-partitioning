@@ -106,5 +106,86 @@ El **Data Partitioning** es una técnica de organización de datos que divide gr
      ) ON SchemePartitionByBirthDate (BirthDate);
      ```
 
+## TALLER
+
+1. Clonar el repositorio y dirigirse a la rama `docker`
+
+``` bash
+git clone https://github.com/denis-gandel/sql-server-partitioning.git
+cd sql-server-partitioning
+git checkout docker
+```
+
+2. Levantar el contenedor docker
+
+``` bash
+docker compose up --build
+```
+
+3. Ingresar a VSCode
+
+``` bash
+code .
+```
+
+4. Instalar las extensiones de MSSQL para VSCode 
+> [SQL SERVER (mssql)](https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql)
+
+5. Conectarse a la base de datos de MSSQL, mediante el logo
+![vista vscode](extension.png)
+
+6. Click en el icono de `+`
+![vista vscode](mssql.png)
+Ingresa las siguientes credenciales
+
+SERVER NAME = `localhost`
+
+USERNAME = `sa`
+
+PASSWORD = `YourStrong@Passw0rd`
+
+> En caso de hacerlo mediante otra herramienta el puerto por defecto es el `1433`
+
+7. Ejecutar todo el archivo `partitioning.sql`
+Solo debe ingresar al archivo, seleccionar todo el contenido y ejecutar con la combinacion de teclado `ctrl+shift+e`
+
+8. Ejecutar archivo `insertValues.sql`, para rellenar los campos con datos necesarios
+
+9. Probar los queries desde el comentario
+``` sql
+-- TEST SQL QUERIES
+
+SELECT * FROM dbo.UsersPartitioning_ByBirthDate;
+
+SELECT 
+    p.partition_number AS PartitionNumber,
+    f.name AS PartitionFilegroup,
+    p.rows AS NumberOfRows
+FROM sys.partitions p
+JOIN sys.destination_data_spaces dds ON p.partition_number = dds.destination_id
+JOIN sys.filegroups f ON dds.data_space_id = f.data_space_id
+WHERE OBJECT_NAME(p.object_id) = 'UsersPartitioning_ByBirthDate';
+
+SELECT * 
+FROM dbo.UsersPartitioning_ByBirthDate
+WHERE YEAR(BirthDate) = 2023;
+
+SELECT * 
+FROM dbo.UsersPartitioning_ByBirthDate
+WHERE YEAR(BirthDate) = 2024;
+
+SELECT * 
+FROM dbo.UsersPartitioning_ByBirthDate
+WHERE YEAR(BirthDate) = 2025;
+
+SELECT * 
+FROM dbo.UsersPartitioning_ByBirthDate
+WHERE YEAR(BirthDate) = 2026;
+
+SELECT * 
+FROM dbo.UsersPartitioning_ByBirthDate 
+WHERE Id = 'id de algun usuario';
+```
+
 ## TUTORIALS
 - [SQL Table Partitioning Explained: Optimize Big Table Performance | #SQL Course #28](https://youtu.be/tQQ3XwrKbfM?feature=shared)
