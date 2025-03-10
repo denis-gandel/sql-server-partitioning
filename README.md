@@ -132,10 +132,13 @@ code .
 > [SQL SERVER (mssql)](https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql)
 
 5. Conectarse a la base de datos de MSSQL, mediante el logo
+
 ![vista vscode](extension.png)
 
 6. Click en el icono de `+`
+
 ![vista vscode](mssql.png)
+
 Ingresa las siguientes credenciales
 
 SERVER NAME = `localhost`
@@ -147,7 +150,9 @@ PASSWORD = `YourStrong@Passw0rd`
 > En caso de hacerlo mediante otra herramienta el puerto por defecto es el `1433`
 
 7. Ejecutar todo el archivo `partitioning.sql`
-Solo debe ingresar al archivo, seleccionar todo el contenido y ejecutar con la combinacion de teclado `ctrl+shift+e`
+Solo debe ingresar al archivo, seleccionar todo el contenido y ejecutar con la combinacion de teclado `ctrl+shift+e` o hacer click al icono de `Execute query` que se encuentra en la parte superior derecha
+
+![Execute query icon](execute.png)
 
 8. Ejecutar archivo `insertValues.sql`, para rellenar los campos con datos necesarios
 
